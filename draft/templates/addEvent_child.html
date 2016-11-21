@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Add Event{% endblock %}
+{% block header %}Add Your Event{% endblock %}
+{% block form %}
+
+<p>Please provide the following details for your upcoming event, which will be displayed on the home page master calendar.</p>
+
+
+<form method="POST" action="/add_event/">
+	<label for="org-id">Select your organization </label>
+	<select name="org-id">
+		<option value="none">Choose One</option>
+		{% for org in orgs %}
+		<option value="{{org[0]}}">{{org[1]}}</option>
+		{% endfor %}
+	</select><br><br>
+
+	<label for="event-name">Name </label>
+        <input type="text" name="event-name"><br>
+
+	<label for="event-date">Date</label>
+        <input type="date" name="event-date"><br>
+
+        <label for="event-startTime">Start Time </label>
+        <input type="time" name="event-startTime"><br>
+
+	<label for="event-endTime">End Time </label>
+        <input type="time" name="event-endTime"><br>
+
+	<label for="event-location">Location</label>
+        <input type="text" name="event-location"><br>
+
+        <label for="event-description">Description </label>
+        <input type="text" name="event-description"><br>
+
+        <label for="event-spam">Link to Picture/Spam</label>
+        <input type="url" name="event-spam"><br>
+
+        <label for="event-type">Type</label>
+        <select name="event-type">
+                <option value="Lecture">Lecture
+                <option value="Meeting">Meeting
+                <option value="Performance">Performance
+                <option value="Rehearsal">Rehearsal
+                <option value="Workshop">Workshop
+                <option value="Conference">Conference
+                <option value="Exhibit">Exhibit
+                <option value="Film Showing">Film Showing
+                <option value="Panel">Panel
+                <option value="Party">Party
+                <option value="Recital">Recital
+                <option value="Seminar">Seminar
+		<option value="Reception">Reception
+                <option value="Community Service">Community Service
+                <option value="Other">Other
+        </select><br><br>
+	
+
+	<input type="submit" >	
+
+</form>
+
+{% endblock %}

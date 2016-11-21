@@ -1,0 +1,32 @@
+<!doctype html>
+<!--
+Grace Hu and Cece Tsui
+home.html
+Wellelsey Events Calendar -->
+
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title> {% block title %}{% endblock %} </title>
+</head>
+<body>
+	<a href="/">Home</a><br>
+        <a href="/register">Register New Organization</a><br>
+	<a href="/add_event">Add Your Event</a><br>
+
+	<!-- flash message -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+                <div class=flashes>
+                {% for message in messages %}
+                        <p>{{message}}<p>
+                {% endfor %}
+                </div>
+          {% endif %}
+        {% endwith %}
+
+	<h1>{% block header %}{% endblock %}</h1>
+
+        {% block form %}{% endblock %}
+</body>
+</html>

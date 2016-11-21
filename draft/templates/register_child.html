@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Register Organization{% endblock %}
+{% block header %}Register Your Organization{% endblock %}
+{% block form %}
+<p> Please provide the following details of your organization.</p>
+
+<form method="POST" action="/register/">
+	<label for="org-name">Name </label>
+	<input type="text" name="org-name"><br>
+
+	<label for="org-description">Description </label>
+        <input type="text" name="org-description"><br>
+
+	<label for="org-email">Email </label>
+        <input type="email" name="org-email"><br>
+
+	<label for="org-website">Website URL </label>
+        <input type="text" name="org-website"><br>
+
+	<label for="org-type">Type</label>
+	<select name="org-type">
+		<option value="Academic">Academic
+		<option value="Career">Career
+		<option value="CGHP Affiliates">CGHP Affiliates	
+		<option value="Cultural">Cultural
+		<option value="Media & Publication">Media & Publication
+		<option value="Performance & Arts">Performance & Arts
+		<option value="Political">Poltical
+		<option value="Religious">Religious
+		<option value="Social Justice & Awareness">Social Justice & Awareness
+		<option value="Societies">Societies
+		<option value="Sports & Teams">Sports and Teams
+		<option value="Volunteer">Volunteer
+	</select><br><br>
+	<input type="submit">	
+
+</form>
+
+{% endblock %}

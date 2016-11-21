@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block message %}{{message}}{% endblock %}
+{% block header %}Wellesley Events Calendar{% endblock %}
+
+{% block form %}
+ 	{% for event in events %}
+	<p>Name: {{event['name']}} is on date: {{event['date']}} from startTime: {{event['start']}} at location: {{event['loc']}} hosted by {{event['org_hosts']}}
+		
+		{# set org_hosts = {{event['org_hosts']}} %}		
+		{% for host in org_hosts %}
+			<p>{{host}}
+		{% endfor #}
+	{% endfor %}
+{% endblock %}
