@@ -3,41 +3,61 @@
 {% block header %}Add Your Event{% endblock %}
 {% block form %}
 
-<p>Please provide the following details for your upcoming event, which will be displayed on the home page master calendar.</p>
+<p>Please provide the following details for your upcoming event, which will be displayed on the home page master calendar.<br>
+<p>* Required fields</p>
 
 
 <form method="POST" action="/add_event/">
-	<label for="org-id">Select your organization </label>
-	<select name="org-id">
-		<option value="none">Choose One</option>
+  <table>
+	<tr>
+	  <td><label for="org-id">* Select your organization </label></td>
+	  <td><select name="org-id">
 		{% for org in orgs %}
 		<option value="{{org[0]}}">{{org[1]}}</option>
 		{% endfor %}
-	</select><br><br>
+	      </select></td>
+	 </tr>
+	<tr>
+	  <td><p>Don't see your organization? Register <a href='/register/'>here</a><br></td>
+	</tr>
+	<tr>
+	  <td><label for="event-name">* Name </label></td>
+          <td><input type="text" name="event-name"></td>
+	</tr>
+	
+	<tr>
+	  <td><label for="event-date">* Date</label></td>
+          <td><input type="date" name="event-date"></td>
+	</tr>
+	
+	<tr>
+          <td><label for="event-startTime">* Start Time </label></td>
+          <td><input type="time" name="event-startTime"></td>
+	</tr>
 
-	<label for="event-name">Name </label>
-        <input type="text" name="event-name"><br>
+	<tr>
+	  <td><label for="event-endTime">End Time </label></td>
+          <td><input type="time" name="event-endTime"></td>
+	</tr>
+	
+	<tr>
+	  <td><label for="event-location">* Location</label></td>
+          <td><input type="text" name="event-location"><br></td>
+	</tr>
 
-	<label for="event-date">Date</label>
-        <input type="date" name="event-date"><br>
+	<tr>
+          <td><label for="event-description">* Description </label></td>
+          <td><input type="text" name="event-description"></td>
+	</tr>
+	
+	<tr>
+          <td><label for="event-spam">Link to Picture/Spam</label></td>
+          <td><input type="url" name="event-spam"></td>
+	</tr>
 
-        <label for="event-startTime">Start Time </label>
-        <input type="time" name="event-startTime"><br>
-
-	<label for="event-endTime">End Time </label>
-        <input type="time" name="event-endTime"><br>
-
-	<label for="event-location">Location</label>
-        <input type="text" name="event-location"><br>
-
-        <label for="event-description">Description </label>
-        <input type="text" name="event-description"><br>
-
-        <label for="event-spam">Link to Picture/Spam</label>
-        <input type="url" name="event-spam"><br>
-
-        <label for="event-type">Type</label>
-        <select name="event-type">
+	<tr>
+          <td><label for="event-type">Type</label></td>
+          <td><select name="event-type">
                 <option value="Lecture">Lecture
                 <option value="Meeting">Meeting
                 <option value="Performance">Performance
@@ -53,10 +73,11 @@
 		<option value="Reception">Reception
                 <option value="Community Service">Community Service
                 <option value="Other">Other
-        </select><br><br>
+            </select></td>
+	 </tr>
+	</table>
 	
-
-	<input type="submit" >	
+  <input type="submit">
 
 </form>
 

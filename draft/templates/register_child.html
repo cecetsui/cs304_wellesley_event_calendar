@@ -2,23 +2,32 @@
 {% block title %}Register Organization{% endblock %}
 {% block header %}Register Your Organization{% endblock %}
 {% block form %}
-<p> Please provide the following details of your organization.</p>
+<p> Please provide the following details of your organization.<br>
+<p> * Required fields </p>
 
 <form method="POST" action="/register/">
-	<label for="org-name">Name </label>
-	<input type="text" name="org-name"><br>
+  <fieldset><legend>Organization Information</legend>
+        <table>
+	  <tr>
+            <td><label for="org-name">* Name </label></td>
+	    <td><input type="text" name="org-name"></td>
+	  </tr>
 
-	<label for="org-description">Description </label>
-        <input type="text" name="org-description"><br>
-
-	<label for="org-email">Email </label>
-        <input type="email" name="org-email"><br>
-
-	<label for="org-website">Website URL </label>
-        <input type="text" name="org-website"><br>
-
-	<label for="org-type">Type</label>
-	<select name="org-type">
+	  <tr>
+	    <td><label for="org-description">Description </label></td>
+            <td><input type="text" name="org-description"></td>
+	  </tr>
+	  <tr>
+	    <td><label for="org-email">Email </label></td>
+            <td><input type="email" name="org-email"></td>
+	  </tr>
+	  <tr>
+	    <td><label for="org-website">Website URL </label></td>
+            <td><input type="text" name="org-website"></td>
+	  </tr>
+	  <tr>
+	    <td><label for="org-type">Type</label></td>
+	    <td><select name="org-type">
 		<option value="Academic">Academic
 		<option value="Career">Career
 		<option value="CGHP Affiliates">CGHP Affiliates	
@@ -31,7 +40,34 @@
 		<option value="Societies">Societies
 		<option value="Sports & Teams">Sports and Teams
 		<option value="Volunteer">Volunteer
-	</select><br><br>
+	    </select></td>
+	 </tr>
+	</table>
+  </fieldset>
+  <fieldset><legend>Organization Contact Information</legend>
+    <table>
+      <tr>
+	<td><label for="org-contact">* Head Contact </label></td>
+        <td><input type="text" name="org-contact"></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-bnum">* Head Contact BNumber </label></td>
+        <td><input type="text" name="org-cont-bnum"></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-email">* Head Contact Email </label></td>
+	<td><input type="test" name="org-cont-email"></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-type">Head Contact is a </label></td>
+	<td><select name="org-cont-type">
+	  <option value="Staff">Staff
+	  <option value="Student">Student
+	</select></td>
+      </tr>
+      </table>
+    </fieldset>
+
 	<input type="submit">	
 
 </form>

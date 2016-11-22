@@ -12,17 +12,17 @@ CREATE TABLE events (
 	name VARCHAR(50) not null,
 	event_date DATE not null,
 	time_start TIME not null,
-	time_end TIME not null,
+	time_end TIME,
 	description VARCHAR(500) not null,
 	location VARCHAR(25) not null,
-	event_type ENUM('Lecture', 'Meeting', 'Performance', 'Rehearsal', 'Workshop', 'Conference', 'Exhibit', 'Film Showing', 'Panel', 'Party', 'Recital', 'Seminar', 'Reception', 'Community Service', 'Other')
+	event_type ENUM('Lecture', 'Meeting', 'Performance', 'Rehearsal', 'Workshop', 'Conference', 'Exhibit', 'Film Showing', 'Panel', 'Party', 'Recital', 'Seminar', 'Reception', 'Community Service', 'Discussion', 'Other')
 ) ENGINE = INNODB;
 	
 
 CREATE TABLE orgs (
 	org_id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) not null,
-	description VARCHAR(500) not null,
+	description VARCHAR(500),
 	email VARCHAR(25),
 	website VARCHAR(200),
 	org_type ENUM('Academic' , 'Career', 'CGHP Affiliates', 'Cultural', 'Media & Publication', 'Performance & Arts', 'Political', 'Religious', 'Social Justice & Awareness', 'Societies', 'Sports & Teams', 'Volunteer')
@@ -30,10 +30,9 @@ CREATE TABLE orgs (
 
 
 CREATE TABLE head_contacts (
-	bnumber INT AUTO_INCREMENT PRIMARY KEY,
+	bnumber VARCHAR(10) PRIMARY KEY not null,
 	name VARCHAR(50) not null,
 	email VARCHAR(25) not null,
-	location VARCHAR(25) not null,
 	contact_type ENUM('Student', 'Staff')
 ) ENGINE = INNODB;
 
@@ -53,7 +52,7 @@ CREATE TABLE orgs_events (
 
 CREATE TABLE orgs_contacts (
 	org_id INT not null,
-	bnumber INT not null,
+	bnumber VARCHAR(10) not null,
 	date_added DATE not null,
 	PRIMARY KEY (org_id, bnumber, date_added),
 	FOREIGN KEY (org_id)
@@ -62,6 +61,4 @@ CREATE TABLE orgs_contacts (
 	FOREIGN KEY (bnumber)
 		REFERENCES head_contacts(bnumber)
 		ON UPDATE cascade ON DELETE restrict
-) ENGINE = INNODB;
-
-
+) ENGINE = INNODB; -- exit!

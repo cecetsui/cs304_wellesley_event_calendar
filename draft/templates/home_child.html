@@ -4,12 +4,17 @@
 {% block header %}Wellesley Events Calendar{% endblock %}
 
 {% block form %}
+<body link="white">
  	{% for event in events %}
-	<p>Name: {{event['name']}} is on date: {{event['date']}} from startTime: {{event['start']}} at location: {{event['loc']}} hosted by {{event['org_hosts']}}
-		
-		{# set org_hosts = {{event['org_hosts']}} %}		
-		{% for host in org_hosts %}
-			<p>{{host}}
-		{% endfor #}
+          <div class="event">
+	  <p class="event-name">
+		<a href='/event_info/{{event['event_id']}}'>{{event['name']}}</a></p>
+	  <p class="event-logistics">{{event['date']}} | {{event['start']}} | {{event['loc']}}<br>
+	    <p>
+	    {% for host in event['org_hosts'] %}
+	        {{host}}
+	    {% endfor %}
+	    </p>
+	 </div>
 	{% endfor %}
 {% endblock %}
