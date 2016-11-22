@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Update Event{% endblock %}
+{% block header %}Update Your Event{% endblock %}
+{% block form %}
+
+<p>Please update the details for this upcoming event, which will be displayed on the home page master calendar. </p>
+
+
+<form method="POST" action={{meth}}>
+  <table>
+    <tr>
+	<td><label for="org-id">Organization </label></td>
+	<td><select name="org-id">
+		{% for event in events["org-id"] %}
+		<option value="{{event[0]}}">{{event[1]}}
+		  {% endfor %}
+	</select></td>
+    </tr>
+    <tr>
+	<td><label for="event-name">Name </label></td>
+        <td><input type="text" name="event-name" value="{{events['event-name']}}"></td>
+    </tr>
+    <tr>
+	<td><label for="event-date">Date</label></td>
+        <td><input type="date" name="event-date" value="{{events['event-date']}}"></td>
+    </tr>
+    <tr>
+        <td><label for="event-startTime">Start Time </label></td>
+        <td><input type="time" name="event-startTime" value="{{events['event-startTime']}}"></td>
+    </tr>
+    <tr>
+	<td><label for="event-endTime">End Time </label></td>
+        <td><input type="time" name="event-endTime" value="{{events['event-endTime']}}"></td>
+    </tr>
+    <tr>
+	<td><label for="event-location">Location</label></td>
+        <td><input type="text" name="event-location" value="{{events['event-location']}}"></td>
+    </tr>
+    <tr>
+        <td><label for="event-description">Description </label></td>
+        <td><input type="text" name="event-description" value="{{events['event-description']}}"></td>
+    </tr>
+    <tr>
+        <td><label for="event-spam">Link to Picture/Spam</label></td>
+        <td><input type="url" name="event-spam" value="{{events['event-spam']}}"></td>
+    </tr>
+    <tr>
+        <td><label for="event-type">Type</label></td>
+        <td><select name="event-type">
+                {% for type in events["event-type"] %}
+		<option value="{{type}}">{{type}}
+		  {% endfor %}
+        </select></td>
+    </tr>
+  </table>
+	<input type="submit" name="submit" value="Update">
+	<input type="submit" name="submit" value="Delete">
+
+</form>
+
+{% endblock %}

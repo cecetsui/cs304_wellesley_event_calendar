@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Event Information{% endblock %}
+{% block header %}Event Information{% endblock %}
+{% block form %}
+
+<p>Here are the details for this upcoming event, which will be displayed on the home page master calendar. Click on the Update button to make any changes.</p>
+
+
+  <table>
+    <tr>
+	<td><label for="org-id">Organization </label></td>
+	<td>
+		{{events["org-id"][0][1]}}
+	</td>
+    </tr>
+    <tr>
+	<td><label for="event-name">Name </label></td>
+        <td>{{events['event-name']}}</td>
+    </tr>
+    <tr>
+	<td><label for="event-date">Date</label></td>
+        <td>{{events['event-date']}}</td>
+    </tr>
+    <tr>
+        <td><label for="event-startTime">Start Time </label></td>
+        <td>{{events['event-startTime']}}</td>
+    </tr>
+    <tr>
+	<td><label for="event-endTime">End Time </label></td>
+        <td>{{events['event-endTime']}}</td>
+    </tr>
+    <tr>
+	<td><label for="event-location">Location</label></td>
+        <td>{{events['event-location']}}</td>
+    </tr>
+    <tr>
+        <td><label for="event-description">Description </label></td>
+        <td>{{events['event-description']}}</td>
+    </tr>
+    <tr>
+        <td><label for="event-spam">Link to Picture/Spam</label></td>
+        <td><img name="event-spam" src="{{events['event-spam']}}"></td>
+    </tr>
+    <tr>
+        <td><label for="event-type">Type</label></td>
+        <td>
+           {{events["event-type"][0]}}
+        </td>
+    </tr>
+  </table>
+
+<form method="POST" action={{meth}}>
+	<input type="submit" name="submit" value="Update">
+</form>
+
+{% endblock %}

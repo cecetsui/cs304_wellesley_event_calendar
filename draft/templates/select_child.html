@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Select Organization{% endblock %}
+{% block header %}Select Your Organization{% endblock %}
+{% block form %}
+
+<p>Please select an organization to either (1) update or (2) search for events within.</p>
+
+<form method="POST" action="/select_org/">
+	  <fieldset>
+	    <legend>Select an Organization</legend>
+	  <label for "org-id">Registered Organizations</label>
+	  <select name="org-id">
+	    <option value="none">Choose One</option>
+	    {% for org in orgs %}
+	    <option value={{org[0]}}>{{org[1]}}</option>
+	    {% endfor %}
+	  </select>
+	  <input type="submit" name="submit" value="Update">
+	  <input type="submit" name="submit" value="Find Event(s)">
+	  </fieldset>
+</form>
+
+
+{% if events %}
+   <br><br>
+   <fieldset><legend><div class="title-events">Events For {{events[0]}}</div></legend>
+   <div class="events">
+     {% for event in events[1] %}
+           <a href="{{event[0]}}">{{event[1]}}</a><br>
+	   {% endfor %}
+	   {% endif %}
+   </div></fieldset>
+
+{% endblock %}
+
+
