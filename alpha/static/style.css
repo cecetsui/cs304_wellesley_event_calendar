@@ -68,6 +68,22 @@ body {
     font-family: Open Sans;
 }
 
-a :visited{
-    text-color: white;
+.event p a {
+    text-decoration: none;
+}
+
+.event p a:hover {
+    color:#002776;
+}
+
+.event p a:visited {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.date-name {
+    font-family:EB Garamond;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
 }

@@ -68,6 +68,11 @@ body {
     font-family: Open Sans;
 }
 
-a :visited{
-    text-color: white;
+.event p a {
+    text-decoration: none;
+}
+
+.event p a:visited {
+    text-decoration: none;
+    color: #FFFFFF;
 }

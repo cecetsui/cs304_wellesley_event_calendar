@@ -12,7 +12,7 @@ import MySQLdb
 import dbconn
 import dsn
 import time
-
+import datetime
 
 '''
 getConn
@@ -44,8 +44,6 @@ def addContact(name, bnum, email, stype):
         curs.execute('insert into head_contacts(bnumber, name, email, contact_type) values (%s, %s, %s, %s)', (bnum, name, email, stype))
     else:
         curs.execute('update head_contacts set name=%s, email=%s, contact_type=%s where bnumber=%s', (name, email, stype, bnum))
-        print "###############"
-        print name
     return bnum
         
     
@@ -75,7 +73,7 @@ def addOrg(name, des, email, website, org_type, pres_bnum):
     row = curs.fetchone()
     #if org does not exist, insert into orgs table
     if row is None:
-  	curs.execute('insert into orgs(name, description, email, website, org_type) values (%s, %s, %s, %s, %s)', (name, des, email, website, org_type,))
+  	curs.execute('insert into orgs(name, description, email, website, org_type) values (%s, %s, %s, %s, %s)', (name, des, email, website, org_type))
         curs.execute('select org_id from orgs where name=%s', (name, ))
         org_id = curs.fetchone()["org_id"]
         curs.execute('insert into orgs_contacts(org_id, bnumber, date_added) values (%s, %s, %s)', (org_id, pres_bnum, time.strftime("%Y-%m-%d %H:%M:%S")))
@@ -277,6 +275,33 @@ def getEventInfo(event_id):
             }
     return eventInfo
 
+'''
+def getOrgInfo(org_id):
+    Given the id of the organization, this function returns 
+    the relevant information in the orgs table for this organization
+    conn = getConn()
+    curs = conn.cursor((MySQLdb.cursors.DictCursor))
+    
+    curs.execute('select email from head_contacts where bnumber=(select bnumber from orgs_contacts where org_id=%s)', (org_id))
+    resp = curs.fetchone()
+    head_email = None
+    if resp is not None:
+	head_email = resp['email']
+
+    curs.execute("select * from orgs where org_id=%s", (org_id,))
+    row = curs.fetchone()
+    if row is None:
+	return None
+    else:
+ 	return {
+		'org-name': row['name'],
+		'org-description': row['description'],
+		'org-email': row['email'],
+		'org-website': row['website'],
+		'org-type': row['org_type'],
+		'head_email': row['email']
+		}	
+'''
 
 
 '''
@@ -318,20 +343,32 @@ def getOrgsList():
 	    orgs.append((unicode(row['org_id']), unicode(row['name'])))
 
 
+
 '''
 getWeekEvents
     Parameters: None
 
     Returns the list of all events for the week. Each event is represented as a dictionary.
 
-TO DO: add parameters for start day, and end day
-for now, it returns all the events in the events table
-along with the hosting orgs 
 '''
-def getWeekEvents():
+'''
+def getWeekEvents(dates):
     conn = getConn()
     curs = conn.cursor((MySQLdb.cursors.DictCursor))
-    curs.execute('select * from events order by event_date, time_start, name ASC')
+
+    # find the dates of all days in the week, given today's date
+    if len(dates) == 1:
+        return ["test", "Test"]
+    print "************************"
+    print dates
+    print "************************"
+    monday = dates[0]
+    sunday = dates[1]
+    
+    
+
+    #query for all events in current week
+    curs.execute('select * from events where event_date between %s and %s order by event_date, time_start, name ASC', (monday, sunday))
     events = []
     while True:
 	row = curs.fetchone()
@@ -351,6 +388,8 @@ def getWeekEvents():
 		'event_type': row['event_type'],
 		'org_hosts': org_hosts
 	    })
+'''
+
 
 
 '''
@@ -358,12 +397,22 @@ getOrgHosts
     Parameters: 
         (1) event_id - the id of the event as from registration
 
-    Returns al list of all names of the orgs that are hosting this event.
+    Returns a dictionary of all names and ids of the orgs that are hosting this event.
 '''
 def getOrgHosts(event_id):
     conn = getConn()
     curs = conn.cursor((MySQLdb.cursors.DictCursor))
     curs.execute('select org_id from orgs_events where event_id=%s', (event_id,))
+
+    orgs = []
+    while True:
+        row = curs.fetchone()
+        if row is None:
+            return orgs
+        else:
+            orgs.append([ getOrgName(row['org_id']) ,  row['org_id'] ])
+
+    '''
     orgs = []
     while True:
 	row = curs.fetchone()
@@ -372,6 +421,21 @@ def getOrgHosts(event_id):
 	    return orgs
 	else:
 	    orgs.append(getOrgName(row['org_id']))
+    '''
+
+
+def getThisWeekDates():
+    '''
+    finds the current date and based off of that, returns a list
+    that contains all the dates within that week, from Monday to Sunday
+    '''
+    today = datetime.date.today()
+    dates = [str(today + datetime.timedelta(days=i)) for i in range(0 - today.weekday(), 7 - today.weekday())]
+    '''
+    for date in dates:
+	strDate = str(date)
+    ''' 
+    return dates
 
 
 '''
@@ -442,11 +506,247 @@ def insertEvent(org_id, name, date, start, end, loc, des, spam, event_type):
 
 
 
+def str_to_datetime(monday_sunday_list):
+    '''
+    Given a list of 2 elements, convert the strings
+    in it to datetime objects. Function returns a dictionary
+    with datetimes of Monday and Sunday
+    '''
+    monday = monday_sunday_list[0]
+    sunday = monday_sunday_list[1]
+    monDate = datetime.datetime.strptime(monday, '%Y-%m-%d')
+    sunDate = datetime.datetime.strptime(sunday, '%Y-%m-%d')
+    return { 'mon': monDate, 'sun': sunDate}
+
+'''
+getDayList
+
+    Parameters:
+        (1) monDate - the date for the week's Monday
+
+    Given the date for Monday of a given week, it should return a list of dates for each day in the week (from Monday to Sunday), where each date is represented as a list.
+'''
+def getDayList(monDate):
+    dateList = []
+    currentDate = monDate
+    for i in range(7):
+        day = currentDate + datetime.timedelta(days=i)
+        dateList.append(str(day.strftime('%Y-%m-%d')))
+    return dateList
+
+'''
+getDayEvents
+    Parameters:
+        (1) dateList - the list of dates from Monday to Sunday
+    
+    Returns a list of lists, where each list in the list is a list of dictionaries where each dictioanry represents an event and its information. The list of dictioanries in the 0th index are events for Monday. The list of dictioanries in the 1st index are events for Tuesday, etc.
+'''
+def getDayEvents(dateList):
+    conn = getConn()
+    curs = conn.cursor((MySQLdb.cursors.DictCursor))
+    dayEvents = []
+    days = ["Monday","Tuesday", "Wednesday","Thursday","Friday", "Saturday", "Sunday"]
+    dayIndex = 0
+    for date in dateList:
+        curs.execute("select * from events where event_date=%s",(date,))
+        events = []
+        selectedEvents = curs.fetchall()
+        for row in selectedEvents:
+            org_hosts = getOrgHosts(row["event_id"])
+            events.append({
+		'event_id': row['event_id'],	
+		'name': row['name'],
+		'date': row['event_date'],
+		'spam': row['spam'],
+		'start': row['time_start'],
+		'end': row['time_end'],		
+		'des': row['description'],
+		'loc': row['location'],
+		'event_type': row['event_type'],
+		'org_hosts': org_hosts
+	    })
+        dayEvents.append((days[dayIndex] + " (" + date + ")", events))
+        dayIndex += 1
+    return dayEvents
 
 
+def getPrevWeekRange(monDate, sunDate):
+    '''
+    Given the datetime objects of Monday and Sunday
+    return a string of the range of days in the previous week.
+    '''
+    updatedMon = monDate - datetime.timedelta(days=7)
+    updatedSun = sunDate - datetime.timedelta(days=7)
+    previousWeekMon = updatedMon.strftime('%Y-%m-%d')
+    previousWeekSun = updatedSun.strftime('%Y-%m-%d')
+    updatedWeek = str(previousWeekMon) + '_' + str(previousWeekSun)
+    return updatedWeek
 
 
+def getNextWeekRange(monDate, sunDate):
+    '''
+    Given the datetime objects of Monday and Sunday
+    return a string of the range of days in the next week.
+    '''
+    updatedMon = monDate + datetime.timedelta(days=7)
+    updatedSun = sunDate + datetime.timedelta(days=7)
+    nextWeekMon = updatedMon.strftime('%Y-%m-%d')
+    nextWeekSun = updatedSun.strftime('%Y-%m-%d')
+    updatedWeek = str(nextWeekMon) + '_' + str(nextWeekSun)
+    return updatedWeek
 
 
+'''
+getFilteredEvents
+
+    Parameters:
+        (1) filterInfo - A dictionary of all the information that the user inputted to filter the events by
+
+    Returns a list of dictionaries where each dictioanry represents an event that is associated with the queries that the user entered.
+'''
+def getFilteredEvents(filterInfo):
+    conn = getConn()
+    curs = conn.cursor((MySQLdb.cursors.DictCursor))
+    
+    #Getting the events based upon the organization information entered
+    orgName = filterInfo["org-name"]
+    orgType = filterInfo["org-type"]
+    queried = False
+    if orgName != "" and orgType != "Choose One":
+        curs.execute("select * from orgs where name like %s and org_type like '%s'", ("%" + orgName + "%", orgType))
+        queried = True
+    elif orgName != "":
+        curs.execute("select * from orgs where name like %s", ("%" + orgName + "%",))
+        queried = True
+    elif orgType != "Choose One":
+        curs.execute("select * from orgs where org_type like %s", (orgType,))
+        queried = True
+    
+    eventIds_org = []
+    if queried: #if the user entered queries for the organizations
+        #get the information and fetch all of the event ids. 
+        orgs = curs.fetchall()
+        for o in orgs:
+            curs.execute("select event_id from orgs_events where org_id=%s", (o["org_id"],))
+            events = curs.fetchall()
+            for e in events:
+                eventIds_org.append(e["event_id"])
+    
+    #Get all the events associated with the data the user entered for the event
+    eName = filterInfo["event-name"]
+    date = filterInfo["date"]
+    eType = filterInfo["event-type"]
+    
+    selects = [] #the columns
+    information = []  #the information associated with the column
+    if eName != "":
+        selects.append("name")
+        information.append("%" + eName + "%")
+    if date != "":
+        selects.append("event_date")
+        information.append(date)
+    if eType != "Choose One":
+        selects.append("event_type")
+        information.append(eType)
+    
+    eventQuery = ""
+    for select in selects: #create the query
+        eventQuery += "and " + select + " LIKE %s "
+
+    eventIds_event = []
+    if eventQuery != "": #if the query has something we can look for
+        eventQuery = eventQuery[3::] #remove the and in the beginning
+        #execute the query
+        curs.execute("select event_id from events where " + eventQuery, tuple(information))
+        events = curs.fetchall()
+        #get all the event ids of all the events associated with the given information
+        for e in events:
+            eventIds_event.append(e["event_id"])
+
+    allEvents = []
+    #If information was entered to search within organizations and the events
+    if eventIds_org != [] and eventIds_event != []:
+        intersection = [] #Find the intersection of event ids between them
+        #As in it is in both the lists
+        for eId in eventIds_org:
+            if eId in eventIds_event:
+                intersection.append(eId)
+        allEvents += extractInfoFromEventIds(intersection)
+    #only information for the organization was entered
+    elif eventIds_org != []:
+        allEvents += extractInfoFromEventIds(eventIds_org)
+    #only information for the event was entered
+    elif eventIds_event != []:
+        allEvents += extractInfoFromEventIds(eventIds_event)
+    return allEvents
 
 
+'''
+extractInfoFromEventIds
+
+    Parameters:
+        (1) eventIds - a list of all the eventIds
+    
+    Returns a list of dictionaries, where each dictionary represents an event that was represented in the eventIds list. The dictionary should have all the information regarding the event.
+'''
+def extractInfoFromEventIds(eventIds):
+    conn = getConn()
+    curs = conn.cursor((MySQLdb.cursors.DictCursor))
+    events = []
+    for eId in eventIds:
+            curs.execute("select * from events where event_id = %s", (eId,))
+            event = curs.fetchone()
+            eventInfo = {"event_id": event["event_id"],
+                         "name": event["name"],
+                         "date": event["event_date"],
+                         "start": event["time_start"],
+                         "loc": event["location"],
+                         "org_hosts": getOrgHosts(event["event_id"])}
+            events.append(eventInfo)
+    return events
+        
+        
+    
+    '''
+    orgName = filterInfo
+    if filterInfo["org-name"] != "" and filterInfo["org-type"] != "":
+            curs.execute("select * from orgs where name like '%s' and org_type like '%s'", ("%" + filterInfo["org-name"
+    '''
+   
+
+'''
+Given an event id, this function returns a list of lists, which provide
+information on the type of email and the email itself: organization email
+or head contact's email.
+''' 
+def getEmails(event_id):
+    conn = getConn()
+    curs = conn.cursor((MySQLdb.cursors.DictCursor))
+
+    # get org_id
+    curs.execute('select * from orgs_events where event_id=%s', (event_id))
+    row = curs.fetchone()
+    org_id = None
+    if row['org_id'] is None:
+        return org_id
+    else:
+         org_id = row['org_id']
+
+    #get org's email
+    curs.execute('select * from orgs where org_id=%s', (org_id))
+    row = curs.fetchone()
+    org_email = None
+    if row['email'] is not None:
+	org_email = str(row['email'])
+
+    #get org head's email
+    curs.execute('select email from head_contacts where bnumber=(select bnumber from orgs_contacts where org_id=%s)', (org_id))
+    row = curs.fetchone()
+    head_email = None
+    if row['email'] is not None:
+   	head_email = str(row['email'])
+
+
+    emails = [['Organization', org_email], ['Head Contact', head_email]]
+    return emails
+ 
