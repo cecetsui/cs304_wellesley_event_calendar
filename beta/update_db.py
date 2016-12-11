@@ -425,6 +425,15 @@ def getOrgHosts(event_id):
 	    orgs.append(getOrgName(row['org_id']))
     '''
 
+'''
+Given some date string, return a list that contains
+all the dates within that week, from Monday to Sunday
+'''
+def getWeek(date_str):
+    date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+    dates = [str(date + datetime.timedelta(days=i)) for i in range(0 - date.weekday(), 7 - date.weekday())]
+    return dates
+
 
 def getThisWeekDates():
     '''

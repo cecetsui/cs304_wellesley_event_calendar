@@ -163,7 +163,10 @@ def addEvent(org_id):
 	# TO DO: with event_id, redirect to that event's information
 	# TO DO: change to redirect to their event page
                 flash(spamMessage)
-	        return redirect(url_for('home'))
+		event_week = getWeek(date)
+	        monday = event_week[0]
+    		sunday = event_week[len(event_week) - 1]
+    		return redirect('/' + monday + '_' + sunday )
 
 
 '''
@@ -258,13 +261,16 @@ def update_event(event_id):
                      "event-spam": spamName,
                      "event-type": request.form["event-type"]
             }
-        if request.form["submit"] == "Update":
+        print "GOT TO HERE AND WE ARE GOING TO SUBMIT THE FORM"
+	print request.form["submit"]
+	if request.form["submit"] == "Update":
             updateEvent(eventInfo, event_id)
             success = "Event (" + eventInfo["event-name"] + ") was successfully updated." + spamMessage
 	    flash(success)
             return redirect("/event_info/" + str(event_id))
-        else:
-            deleteEvent(event_id)
+        if request.form["submit"] == "Delete":
+            print '!@$%^&%$%^&$&*&^#$#$$$$$$$$$$$$$$$$$$$$$$$'
+	    deleteEvent(event_id)
             success = "Event (" + eventInfo["event-name"] + ") was successfully deleted."
             flash(success)
             return redirect("/")
