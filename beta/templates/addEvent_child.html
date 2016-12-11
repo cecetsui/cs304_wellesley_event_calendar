@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Add Event{% endblock %}
+{% block header %}Add Your Event{% endblock %}
+{% block form %}
+
+<p>Please provide the following details for your upcoming event, which will be displayed on the home page master calendar.<br>
+<p>* Required fields</p>
+
+
+<form method="POST" id='usrform' enctype="multipart/form-data" action="/add_event/">
+  <table>
+	<tr>
+	  <td><label for="org-id"><b>* Select your organization</b> </label></td>
+	  <td><select name="org-id">
+		{% for org in orgs %}
+		<option value="{{org[0]}}">{{org[1]}}</option>
+		{% endfor %}
+	      </select></td>
+	 </tr>
+	<tr>
+	  <td><p>Don't see your organization? Register <a href='/register/'>here</a><br></td>
+	</tr>
+	<tr>
+	  <td><label for="event-name"><b>* Name </b></label></td>
+          <td><input type="text" name="event-name" maxlength='50'></td>
+	</tr>
+	
+	<tr>
+	  <td><label for="event-date"><b>* Date </b></label></td>
+          <td><input type="date" name="event-date"></td>
+	</tr>
+	
+	<tr>
+          <td><label for="event-startTime"><b>* Start Time </b></label></td>
+          <td><input type="time" name="event-startTime"></td>
+	</tr>
+
+	<tr>
+	  <td><label for="event-endTime"><b>End Time </b></label></td>
+          <td><input type="time" name="event-endTime"></td>
+	</tr>
+	
+	<tr>
+	  <td><label for="event-location"><b>* Location </b></label></td>
+          <td><input type="text" name="event-location" maxlength='25'><br></td>
+	</tr>
+<!--
+	<tr>
+          <td><label for="event-description"><b>* Description </b></label></td>
+          <td><input type="text" name="event-description" maxlength='500' style='width: 300px; height:150px'></td>
+
+	</tr>
+-->
+	<tr>
+	  <td><label for="event-description"><b>* Description </b></label></td>
+   	  <td><textarea rows="6" cols="50" name="event-description" form="usrform"></textarea></td>	
+	</tr>
+	<tr>
+          <td><label for="file"><b>Spam </b></label></td>
+          <td><input type="file" name="file"></td>
+	</tr>
+	
+
+	<tr>
+          <td><label for="event-type"><b>Type </b></label></td>
+          <td><select name="event-type">
+                <option value="Lecture">Lecture
+                <option value="Meeting">Meeting
+                <option value="Performance">Performance
+                <option value="Rehearsal">Rehearsal
+                <option value="Workshop">Workshop
+                <option value="Conference">Conference
+                <option value="Exhibit">Exhibit
+                <option value="Film Showing">Film Showing
+                <option value="Panel">Panel
+                <option value="Party">Party
+                <option value="Recital">Recital
+                <option value="Seminar">Seminar
+		<option value="Reception">Reception
+                <option value="Community Service">Community Service
+                <option value="Other">Other
+            </select></td>
+	 </tr>
+	</table>
+	
+  <input type="submit">
+
+</form>
+
+{% endblock %}

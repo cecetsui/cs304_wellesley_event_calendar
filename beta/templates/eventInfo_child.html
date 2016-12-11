@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Event Information{% endblock %}
+{% block header %}Event Information{% endblock %}
+{% block form %}
+
+<p><b>Here are the details for this upcoming event, which will be displayed on the home page master calendar. Click on the Update button to make any changes.</b></p>
+
+
+  <table>
+    <tr>
+	<td><label for="org-id"><b>Organization </b></label></td>
+	<td>
+		{{events["org-id"][0][1]}}
+	</td>
+    </tr>
+    <tr>
+	<td><label for="event-name"><b>Name </b></label></td>
+        <td>{{events['event-name']}}</td>
+    </tr>
+    <tr>
+	<td><label for="event-date"><b>Date </b></label></td>
+        <td>{{events['event-date']}}</td>
+    </tr>
+    <tr>
+        <td><label for="event-startTime"><b>Start Time </b></label></td>
+        <td>{{events['event-startTime']}}</td>
+    </tr>
+    <tr>
+	<td><label for="event-endTime"><b>End Time </b></label></td>
+        <td>{{events['event-endTime']}}</td>
+    </tr>
+    <tr>
+	<td><label for="event-location"><b>Location </b></label></td>
+        <td>{{events['event-location']}}</td>
+    </tr>
+    <tr>
+        <td><label for="event-description"><b>Description </b></label></td>
+        <td>{{events['event-description']}}</td>
+    </tr>
+    <tr>
+        <td><label for="event-spam"><b>Spam </b></label></td>
+    	
+	{% if events['event-spam'] != "No spam" %}
+        <td><img name="event-spam" src="{{events['event-spam']}}" width="40%"></td>
+        {% endif %}
+
+   	{% if events['event-spam'] == "No spam" %} 
+	<td><p>No spam </p></td>
+	{% endif %}
+   </tr>
+    <tr>
+        <td><label for="event-type"><b>Type </b></label></td>
+        <td>
+           {{events["event-type"][0]}}
+        </td>
+    </tr>
+  </table>
+
+<form method="POST" action={{meth}}>
+	<input type="submit" name="submit" value="Update">
+</form>
+
+<br><br><br>
+<p>Any questions? Email the organization or its head contact below: </p>
+<ul>
+{% for email in emails %}
+	<li><p>{{email[0]}}: 
+	<a href="mailto:{{email[1]}}?Subject={{events['event-name']}}" target="_top">Send Mail</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+

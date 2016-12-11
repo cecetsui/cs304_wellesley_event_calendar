@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block message %}{{message}}{% endblock %}
+{% block header %}Wellesley Events Calendar{% endblock %}
+
+{% block form %}
+<body link="white">
+  <center>
+    <form method="POST" action={{meth}}>
+      <input type="submit" name='submit' value="Previous Week">
+      <input type="submit" name='submit' value="Next Week">
+    </form>
+  </center>
+
+  <br><br>
+
+  <table width="100%" border="1" frame="void" rules="rows" bordercolor="f1f1f1" style="font-family:Work Sans">
+    {% for day in events %}
+    <tr bgcolor="#f1f1f1">
+      <td colspan="5" style="text-align:center">
+	<p style="color:#000000;font-family:Bitter;">
+	  <b>{{day[0].upper()}}</b>
+        </p>
+      </td>
+    </tr>
+
+    {% for event in day[1] %}
+    <tr>
+      <td style="width:10%">{{event["start"]}}</td>
+      <td style="width:30%" class="table_link">
+	<a href="/event_info/{{event['event_id']}}">{{event["name"]}}</a>
+      </td>
+      <td class="table_link" style="25%">
+	{% for host in event["org_hosts"] %}
+	<a href="/org_info/{{host[1]}}">{{host[0]}}</a>
+	{% endfor %}
+      </td>
+      <td style="25%">{{event["loc"]}}</td>
+    </tr>
+    {% endfor %}
+    <tr><td><br><br></td></tr> <!-- for space in between days -->
+    {% endfor %}
+  </table>
+{% endblock %}

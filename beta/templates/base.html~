@@ -1,0 +1,37 @@
+<!doctype html>
+<!--
+Grace Hu and Cece Tsui
+home.html
+Wellelsey Events Calendar -->
+
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title> {% block title %}{% endblock %} </title>
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Open+Sans+Condensed:300" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+  <ul class="navbar">
+	<li><a href="/">Home</a><br></li>
+        <li><a href="/register">Register New Organization</a><br></li>
+	<li><a href="/add_event">Add Your Event</a><br></li>
+	<li><a href="/select_org">Select An Org</a><br></li>
+	<li><a href="/filter">Find an Org</a><br></li>
+	<li style="float:right;width:75px;"><img width="75px" src="https://sites.google.com/a/wellesley.edu/wellesley-water-polo/_/rsrc/1327004949627/config/customLogo.gif?revision=1"></li>
+  </ul>
+  <h1>{% block header %}{% endblock %}</h1>
+	<!-- flash message -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+                <div class="flashes">
+                {% for message in messages %}
+                        <p>{{message}}<p>
+                {% endfor %}
+                </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block form %}{% endblock %}
+</body>
+</html>

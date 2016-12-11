@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Register Organization{% endblock %}
+{% block header %}Register Your Organization{% endblock %}
+{% block form %}
+<p> Please provide the following details of your organization.<br>
+<p> * Required fields </p>
+
+<form method="POST" action="/register/">
+  <fieldset><legend><b>Organization Information</b></legend>
+        <table>
+	  <tr>
+            <td><label for="org-name"><b>* Name </b></label></td>
+	    <td><input type="text" name="org-name" maxlength='50'></td>
+	  </tr>
+
+	  <tr>
+	    <td><label for="org-description"><b>Description </b></label></td>
+            <td><input type="text" name="org-description" maxlength='500' style='width: 300px; height:150px'></td>
+	  </tr>
+	  <tr>
+	    <td><label for="org-email"><b>Email </b></label></td>
+            <td><input type="email" name="org-email" maxlength='25'></td>
+	  </tr>
+	  <tr>
+	    <td><label for="org-website"><b>Website URL </b></label></td>
+            <td><input type="text" name="org-website" maxlength='200'></td>
+	  </tr>
+	  <tr>
+	    <td><label for="org-type"><b>Type </b></label></td>
+	    <td><select name="org-type">
+		<option value="Academic">Academic
+		<option value="Career">Career
+		<option value="CGHP Affiliates">CGHP Affiliates	
+		<option value="Cultural">Cultural
+		<option value="Media & Publication">Media & Publication
+		<option value="Performance & Arts">Performance & Arts
+		<option value="Political">Poltical
+		<option value="Religious">Religious
+		<option value="Social Justice & Awareness">Social Justice & Awareness
+		<option value="Societies">Societies
+		<option value="Sports & Teams">Sports and Teams
+		<option value="Volunteer">Volunteer
+	    </select></td>
+	 </tr>
+	</table>
+  </fieldset>
+  <fieldset><legend><b>Organization Contact Information</b></legend>
+    <table>
+      <tr>
+	<td><label for="org-contact"><b>* Head Contact </b></label></td>
+        <td><input type="text" name="org-contact" maxlength='50'></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-bnum"><b>* Head Contact BNumber </b></label></td>
+        <td><input type="text" name="org-cont-bnum" maxlength='10'></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-email"><b>* Head Contact Email </b></label></td>
+	<td><input type="test" name="org-cont-email" maxlength='25'></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-type"><b>Head Contact is a </b></label></td>
+	<td><select name="org-cont-type">
+	  <option value="Student">Student
+	  <option value="Staff">Staff
+	</select></td>
+      </tr>
+      </table>
+    </fieldset>
+
+	<input type="submit">	
+
+</form>
+
+{% endblock %}

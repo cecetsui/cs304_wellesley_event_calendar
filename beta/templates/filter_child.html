@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Update Organization{% endblock %}
+{% block header %}Find an Event!{% endblock %}
+{% block form %}
+
+<p>Fill out at least one of the below criteria to find an event.</p>
+
+
+<form method="POST" action={{meth}}>
+  <fieldset><legend>Find an Event!</legend>
+    <table>
+      <tr>
+	<td><label for="event-name"><b>Event Name </b></label></td>
+	<td><input type="text" name="event-name"></td>
+      </tr>
+      <tr>
+	<td><label for="date"><b>Event Date </b></label></td>
+	<td><input type="date" name="date"></td>
+      </tr>
+      <tr>
+	<td><label for="event-type"><b>Event Type </b></label></td>
+	<td><select name="event-type">
+	        <option value="Choose One">Choose One
+	        {% for type in info["event-type"] %}
+		<option value="{{type}}">{{type}}
+		{% endfor %}
+	    </select></td>
+      </tr>
+      <tr>
+	<!--
+	<td><label for="org-name"><b>Organization Name </b></label></td>
+	-->
+          <td><label for "org-name"><b>Registered Organizations </b></label></td>
+          <td><select name="org-name">
+            <option value=""><b>Choose One</b></option>
+            {% for org in orgs %}
+            <option value={{org[1]}}>{{org[1]}}</option>
+            {% endfor %}
+          </select></td>
+	<!--
+	<td><input type="text" name="org-name"></td>
+        -->
+      </tr>
+      <tr>
+	<td><label for="org-type"><b>Organization Type </b></label></td>
+	<td><select name="org-type">
+	        <option value="Choose One">Choose One
+	        {% for type in info["org-type"] %}
+		<option value="{{type}}">{{type}}
+		{% endfor %}
+	    </select></td>
+      </tr>
+      </table>
+  </fieldset>
+  <input type="submit" name="submit" value="Search">
+</form>
+<br><br>
+
+{% if info["events"]|length != 0 %}
+<table width="100%" border="1" frame="void" rules="rows" bordercolor="f1f1f1" style="font-family:Work Sans">
+  <tr bgcolor="#f1f1f1">
+    <td colspan="5" style="text-align:center"><p style="color:#000000;font-family:Bitter;"><b>Results</b></p></td>
+    </tr>
+{% for event in info["events"] %}
+
+  <tr>
+    <td style="width:10%">{{event["start"]}}</td>
+    <td style="width:30%" class="table_link">
+      <a href="/event_info/{{event['event_id']}}">{{event["name"]}}</a>
+    </td>
+    <td class="table_link" style="25%">
+      {% for host in event["org_hosts"] %}
+      <a class="event_link" href="/org_info/{{host[1]}}">{{host[0]}}</a>
+      {% endfor %}
+    </td>
+    <td style="25%">{{event["loc"]}}</td>
+  </tr>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

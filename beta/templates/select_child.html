@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Select Organization{% endblock %}
+{% block header %}Select Your Organization{% endblock %}
+{% block form %}
+
+<p>Please select an organization to either update.</p>
+
+<form method="POST" action="/select_org/">
+	  <label for "org-id"><b>Registered Organizations</b></label>
+	  <select name="org-id">
+	    <option value="none"><b>Choose One</b></option>
+	    {% for org in orgs %}
+	    <option value={{org[0]}}>{{org[1]}}</option>
+	    {% endfor %}
+	  </select>
+	  <input type="submit" name="submit" value="Update">
+</form>
+
+
+{% if events %}
+   <br><br>
+   <fieldset><legend><div class="title-events"><b>Events For {{events[0]}}</b></div></legend>
+   <div class="events">
+     {% for event in events[1] %}
+           <a href="{{event[0]}}">{{event[1]}}</a><br>
+	   {% endfor %}
+	   {% endif %}
+   </div></fieldset>
+
+{% endblock %}
+
+

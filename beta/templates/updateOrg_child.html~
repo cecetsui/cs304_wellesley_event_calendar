@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Update Organization{% endblock %}
+{% block header %}Update Your Organization{% endblock %}
+{% block form %}
+
+<p>Please update the following details for your organization.</p>
+
+
+<form method="POST" action={{meth}}>
+  <fieldset><legend>Organization Information</legend>
+    <table>
+      <tr>
+	<td><label for="org-name">Organization Name</label></td>
+	<td><input name="org-name" value="{{orgInfo['org-name']}}" maxlength='50'></td>
+      </tr>
+      <tr>
+	<td><label for="org-description">Organization Description</label></td>
+	<td><input name="org-description" value="{{orgInfo['org-description']}}" maxlength='500' style='width: 300px; height=150px;'></td>
+      </tr>
+      <tr>
+	<td><label for="org-email">Organization Email</label></td>
+	<td><input name="org-email" value="{{orgInfo['org-email']}}" maxlength='25'></td>
+      </tr>
+      <tr>
+	<td><label for="org-website">Organization Website</label></td>
+	<td><input name="org-website" value="{{orgInfo['org-website']}}" maxlength='200'></td>
+      </tr>
+      <tr>
+	<td><label for="org-type">Organization Type</label></td>
+	<td><select name="org-type">{{orgInfo["org-type"]|safe}}</select></td>
+      </tr>
+      </table>
+  </fieldset>
+  <br>
+  <fieldset><legend>Organization Contact Information</legend>
+    <table>
+      <tr>
+	<td><label for="org-contact">Contact Name</label></td>
+	<td><input name="org-contact" value="{{orgInfo['org-contact']}}" maxlength='50'></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-bnum">Contact B-Number</label></td>
+	<td><input name="org-cont-bnum" value="{{orgInfo['org-cont-bnum']}}" maxlength='10'></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-email">Contact Email</label></td>
+	<td><input name="org-cont-email" value="{{orgInfo['org-cont-email']}}" maxlength='25'></td>
+      </tr>
+      <tr>
+	<td><label for="org-cont-type">Contact Type</label></td>
+	<td><select name="org-cont-type">{{orgInfo["org-cont-type"]|safe}}</select></td>
+      </tr>
+      </table>
+  </fieldset>
+  <br>
+  <input type="submit" name="submit" value="update">
+  <input type="submit" name="submit" value="delete"> 
+      
+</form>
+{% endblock %}

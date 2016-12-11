@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Organization Information{% endblock %}
+{% block header %}Organization Information{% endblock %}
+{% block form %}
+
+<p>Here are the details for this organization. Click on the Update button to make any changes.</p>
+
+
+  <table>
+    <tr>
+	<td><label for="org-name"><b>Name </b></label></td>
+        <td>{{orgs['org-name']}}</td>
+    </tr>
+    <tr>
+	<td><label for="org-description"><b>Description </b></label></td>
+        <td>{{orgs['org-description']}}</td>
+    </tr>
+    <tr>
+        <td><label for="org-website"><b>Website </b></label></td>
+        <td>{{orgs['org-website']}}</td>
+    </tr>
+    <tr>
+	<td><label for="org-type"><b>Type </b></label></td>
+        <td><select name="org-type">{{orgs["org-type"]|safe}}</select>
+    </tr>
+  </table>
+
+<form method="POST" action={{meth}}>
+	<input type="submit" name="submit" value="Update">
+</form>
+
+<br><br><br>
+<p>Any questions? Email the organization or its head contact below: </p>
+<ul>
+{% for email in emails %}
+	<li><p>{{email[0]}}: 
+	<a href="mailto:{{email[1]}}?Subject={{orgs['name']}}" target="_top">Send Mail</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+
