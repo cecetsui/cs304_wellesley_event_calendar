@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name=author content="Scott D. Anderson">
+    <title>{{ page_title }}</title>
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Open+Sans+Condensed:300|Bitter|Dancing+Script|Work+Sans" rel="stylesheet">
+    <link rel='stylesheet' href="{{url_for('static', filename = 'style.css')}}">
+    {% block head_stuff %} {% endblock %}
+</head>
+<body bgcolor="#002776">
+
+<br><br><br>
+<hr style="border-color:#ffffff;border-width:6px"  width="100%" noshade><hr style="border-color:#ffffff;border-width:6px"  width="100%" noshade>
+{% block main_content %}
+<h1>Welcome!</h1>
+{% endblock %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div id="messages">
+        {% for msg in messages %}
+            <p>{{msg}}</p>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+
+
+<center>        
+{% if username %}
+   <form action="/logout/"><button>logout {{username}}</button></form>
+{% else %}
+   <form action="/login/"><button>Login</button></form>
+{% endif %} 
+</center>
+<br>
+<hr style="border-color:#ffffff;border-width:6px"  width="100%" noshade><hr style="border-color:#ffffff;border-width:6px"  width="100%" noshade>
+</body>
+</html>

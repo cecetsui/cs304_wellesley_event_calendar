@@ -8,17 +8,44 @@ Wellelsey Events Calendar -->
 <head>
     <meta charset='utf-8'>
     <title> {% block title %}{% endblock %} </title>
+    <link href="http://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Open+Sans+Condensed:300|Bitter|Work Sans" rel="stylesheet">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <!--combo box -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../static/combobox.js"></script>
 </head>
 <body>
   <ul class="navbar">
 	<li><a href="/">Home</a><br></li>
         <li><a href="/register">Register New Organization</a><br></li>
-	<li><a href="/select_org">Update An Organization</a><br></li>
-	<li><a href="/add_event">Add Your Event</a><br></li>
+	<li><a href="/select_org">Update an Organization</a><br></li>
+	<li><a href="/add_event">Add an Event</a><br></li>
 	<li><a href="/filter">Find an Event</a><br></li>
-	<li style="float:right;width:75px;"><img width="75px" src="https://sites.google.com/a/wellesley.edu/wellesley-water-polo/_/rsrc/1327004949627/config/customLogo.gif?revision=1"></li>
+	<li style="float:right;width:75px;"><table><tr><td><img width="75px" src="https://sites.google.com/a/wellesley.edu/wellesley-water-polo/_/rsrc/1327004949627/config/customLogo.gif?revision=1"></td></tr>
+	    <tr><td>
+	      <form action="/logout/"><button>Logout {{username}}</button></form>
+            </td></tr></table></li>
   </ul>
   <h1>{% block header %}{% endblock %}</h1>
 	<!-- flash message -->

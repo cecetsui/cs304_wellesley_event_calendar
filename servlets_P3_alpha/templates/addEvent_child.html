@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Add Event{% endblock %}
+{% block header %}Add Your Event{% endblock %}
+{% block form %}
+
+<p>Please provide the following details for your upcoming event, which will be displayed on the home page master calendar.<br>
+<p>* Required fields</p>
+
+
+<form method="POST" action="/add_event/">
+  <table>
+	<tr>
+	  <td><label for="org-id">* Select your organization </label></td>
+	  <td><select name="org-id">
+		{% for org in orgs %}
+		<option value="{{org[0]}}">{{org[1]}}</option>
+		{% endfor %}
+	      </select></td>
+	 </tr>
+	<tr>
+	  <td><p>Don't see your organization? Register <a href='/register/'>here</a><br></td>
+	</tr>
+	<tr>
+	  <td><label for="event-name">* Name </label></td>
+          <td><input type="text" name="event-name"></td>
+	</tr>
+	
+	<tr>
+	  <td><label for="event-date">* Date</label></td>
+          <td><input type="date" name="event-date"></td>
+	</tr>
+	
+	<tr>
+          <td><label for="event-startTime">* Start Time </label></td>
+          <td><input type="time" name="event-startTime"></td>
+	</tr>
+
+	<tr>
+	  <td><label for="event-endTime">End Time </label></td>
+          <td><input type="time" name="event-endTime"></td>
+	</tr>
+	
+	<tr>
+	  <td><label for="event-location">* Location</label></td>
+          <td><input type="text" name="event-location"><br></td>
+	</tr>
+
+	<tr>
+          <td><label for="event-description">* Description </label></td>
+          <td><input type="text" name="event-description"></td>
+	</tr>
+	
+	<tr>
+          <td><label for="event-spam">Link to Picture/Spam</label></td>
+          <td><input type="url" name="event-spam"></td>
+	</tr>
+
+	<tr>
+          <td><label for="event-type">Type</label></td>
+          <td><select name="event-type">
+                <option value="Lecture">Lecture
+                <option value="Meeting">Meeting
+                <option value="Performance">Performance
+                <option value="Rehearsal">Rehearsal
+                <option value="Workshop">Workshop
+                <option value="Conference">Conference
+                <option value="Exhibit">Exhibit
+                <option value="Film Showing">Film Showing
+                <option value="Panel">Panel
+                <option value="Party">Party
+                <option value="Recital">Recital
+                <option value="Seminar">Seminar
+		<option value="Reception">Reception
+                <option value="Community Service">Community Service
+                <option value="Other">Other
+            </select></td>
+	 </tr>
+	</table>
+	
+  <input type="submit">
+
+</form>
+
+{% endblock %}

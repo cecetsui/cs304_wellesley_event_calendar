@@ -7,58 +7,63 @@
 <p>* Required fields</p>
 
 
-<form method="POST" enctype="multipart/form-data" action="/add_event/">
+<form method="POST" id='usrform' enctype="multipart/form-data" action="/add_event/">
   <table>
 	<tr>
-	  <td><label for="org-id">* Select your organization </label></td>
-	  <td><select name="org-id">
-		{% for org in orgs %}
+	  <td><label for="org-id"><b>* Select your organization</b> </label></td>
+	  <td>
+	    <div class="ui-widget">
+	      <select id="combobox" name="org-id">
+<!--
+		<option value="none"><b></b></option>
+-->
+	        {% for org in orgs %}
+
 		<option value="{{org[0]}}">{{org[1]}}</option>
+
 		{% endfor %}
 	      </select></td>
+	  </div>
 	 </tr>
 	<tr>
 	  <td><p>Don't see your organization? Register <a href='/register/'>here</a><br></td>
 	</tr>
 	<tr>
-	  <td><label for="event-name">* Name </label></td>
-          <td><input type="text" name="event-name" maxlength='50'></td>
+	  <td><label for="event-name"><b>* Name </b></label></td>
+          <td><input type="text" name="event-name" maxlength="50" style="width: 300px" ></td>
 	</tr>
 	
 	<tr>
-	  <td><label for="event-date">* Date</label></td>
+	  <td><label for="event-date"><b>* Date </b></label></td>
           <td><input type="date" name="event-date"></td>
 	</tr>
 	
 	<tr>
-          <td><label for="event-startTime">* Start Time </label></td>
+          <td><label for="event-startTime"><b>* Start Time </b></label></td>
           <td><input type="time" name="event-startTime"></td>
 	</tr>
 
 	<tr>
-	  <td><label for="event-endTime">End Time </label></td>
+	  <td><label for="event-endTime"><b>End Time </b></label></td>
           <td><input type="time" name="event-endTime"></td>
 	</tr>
 	
 	<tr>
-	  <td><label for="event-location">* Location</label></td>
-          <td><input type="text" name="event-location" maxlength='25'><br></td>
+	  <td><label for="event-location"><b>* Location </b></label></td>
+          <td><input type="text" name="event-location" maxlength="25" style="width: 300px"><br></td>
 	</tr>
-
 	<tr>
-          <td><label for="event-description">* Description </label></td>
-          <td><input type="text" name="event-description" maxlength='500' style='width: 300px; height:150px'></td>
-
+	  <td><label for="event-description"><b>* Description </b></label></td>
+   	  <td><textarea rows="6" cols="50" name="event-description" form="usrform">Co-sponsored by: </textarea></td>	
 	</tr>
-	
 	<tr>
-          <td><label for="file">Link to Picture/Spam</label></td>
+          <td><label for="file"><b>Spam </b></label></td>
           <td><input type="file" name="file"></td>
 	</tr>
 	
 
 	<tr>
-          <td><label for="event-type">Type</label></td>
+          <td><label for="event-type"><b>Type </b></label></td>
           <td><select name="event-type">
                 <option value="Lecture">Lecture
                 <option value="Meeting">Meeting

@@ -3,27 +3,31 @@
 {% block header %}Select Your Organization{% endblock %}
 {% block form %}
 
-<p>Please select an organization to either (1) update or (2) search for events within.</p>
-
+<p>Start typing the name of an organization you'd like to update.</p>
+<div class="ui-widget">
 <form method="POST" action="/select_org/">
-	  <fieldset>
-	    <legend>Select an Organization</legend>
-	  <label for "org-id">Registered Organizations</label>
-	  <select name="org-id">
-	    <option value="none">Choose One</option>
+<!--
+  <div class="ui-widget">
+-->
+	  <label for "org-id"><b>Registered Organizations</b></label>
+	  <select id="combobox" name="org-id" style="width:40%;">
+
+	    <option value="none"><b></b></option>
 	    {% for org in orgs %}
 	    <option value={{org[0]}}>{{org[1]}}</option>
 	    {% endfor %}
 	  </select>
-	  <input type="submit" name="submit" value="Update">
-	  <input type="submit" name="submit" value="Find Event(s)">
-	  </fieldset>
+<!--
+  </div>
+-->
+	  <br><input type="submit" name="submit" value="Update">
 </form>
-
+</div>
 
 {% if events %}
    <br><br>
-   <fieldset><legend><div class="title-events">Events For {{events[0]}}</div></legend>
+   <fieldset><legend><div class="title-events"><b>Events For {{events[0]}}</b></div></legend>
+     
    <div class="events">
      {% for event in events[1] %}
            <a href="{{event[0]}}">{{event[1]}}</a><br>

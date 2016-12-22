@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block message %}{{message}}{% endblock %}
+{% block header %}Wellesley Events Calendar{% endblock %}
+
+{% block form %}
+<body link="white">
+	<form method="POST" action={{meth}}>
+		<input type="submit" name='submit' value="Previous Week">
+		<input type="submit" name='submit' value="Next Week">
+	</form>
+	<br><br>
+	<table width="100%">
+ 	{% for day in events %}
+	<tr><fieldset><legend><p class="date-name">{{day[0]}}</p></legend>
+	  {% for event in day[1] %}
+              <div class="event">
+		<p class="event-name">
+		  <a class="event_link" href='/event_info/{{event['event_id']}}'>{{event['name']}}</a></p>
+		<p class="event-logistics">{{event['date']}} | {{event['start']}} | {{event['loc']}}<br></p>
+		<p>
+		{% for host in event['org_hosts'] %}
+	            <a href='/org_info/{{host[1]}}'>{{host[0]}}</a>
+		{% endfor %}
+		</p>
+	      </div>
+	  {% endfor %}
+	  </fieldset></tr>
+	<br><br>
+	{% endfor %}
+	</table>
+{% endblock %}

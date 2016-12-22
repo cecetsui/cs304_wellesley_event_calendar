@@ -6,24 +6,25 @@
 <p>Please update the following details for your organization.</p>
 
 
-<form method="POST" action={{meth}}>
+<form method="POST" enctype="multipart/form-data" action={{meth}}>
   <fieldset><legend><b>Organization Information</b></legend>
     <table>
       <tr>
 	<td><label for="org-name"><b>Organization Name </b></label></td>
-	<td><input name="org-name" value="{{orgInfo['org-name']}}" maxlength='50'></td>
+	<td><input name="org-name" maxlength="50" value="{{orgInfo['org-name']}}" style="width: 300px;"></td>
       </tr>
       <tr>
 	<td><label for="org-description"><b>Organization Description </b></label></td>
-	<td><input name="org-description" value="{{orgInfo['org-description']}}" maxlength='500' style='width: 300px; height=150px;'></td>
+	<td><textarea rows="6" cols="50" name="org-description" maxlength="500">{{orgInfo["org-description"]}}</textarea></td>
+	<!-- <td><input name="org-description" value="{{orgInfo['org-description']}}" maxlength="500" style="width: 300px; height=150px;"></td> -->
       </tr>
       <tr>
 	<td><label for="org-email"><b>Organization Email </b></label></td>
-	<td><input name="org-email" value="{{orgInfo['org-email']}}" maxlength='25'></td>
+	<td><input name="org-email" value="{{orgInfo['org-email']}}" maxlength='25' style="width: 300px;"></td>
       </tr>
       <tr>
 	<td><label for="org-website"><b>Organization Website </b></label></td>
-	<td><input name="org-website" value="{{orgInfo['org-website']}}" maxlength='200'></td>
+	<td><input name="org-website" value="{{orgInfo['org-website']}}" maxlength='200' style="width: 300px;"></td>
       </tr>
       <tr>
 	<td><label for="org-type"><b>Organization Type </b></label></td>
@@ -36,15 +37,15 @@
     <table>
       <tr>
 	<td><label for="org-contact"><b>Contact Name </b></label></td>
-	<td><input name="org-contact" value="{{orgInfo['org-contact']}}" maxlength='50'></td>
+	<td><input name="org-contact" value="{{orgInfo['org-contact']}}" maxlength='50' style="width: 300px;"></td>
       </tr>
       <tr>
 	<td><label for="org-cont-bnum"><b>Contact B-Number </b></label></td>
-	<td><input name="org-cont-bnum" value="{{orgInfo['org-cont-bnum']}}" maxlength='10'></td>
+	<td><input name="org-cont-bnum" value="{{orgInfo['org-cont-bnum']}}" maxlength='10' style="width: 300px;"></td>
       </tr>
       <tr>
 	<td><label for="org-cont-email"><b>Contact Email </b></label></td>
-	<td><input name="org-cont-email" value="{{orgInfo['org-cont-email']}}" maxlength='25'></td>
+	<td><input name="org-cont-email" value="{{orgInfo['org-cont-email']}}" maxlength='25' style="width: 300px;"></td>
       </tr>
       <tr>
 	<td><label for="org-cont-type"><b>Contact Type </b></label></td>
@@ -53,8 +54,8 @@
       </table>
   </fieldset>
   <br>
-  <input type="submit" name="submit" value="update">
-  <input type="submit" name="submit" value="delete"> 
+  <input type="submit" name="submit" value="Update">
+  <input type="submit" name="submit" value="Delete"> 
       
 </form>
 {% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Update Organization{% endblock %}
+{% block header %}Update Your Organization{% endblock %}
+{% block form %}
+
+<p>Please update the following details for your organization.</p>
+
+
+<form method="POST" action={{meth}}>
+  <fieldset><legend>Find an Event!</legend>
+    <table>
+      <tr>
+	<td><label for="event-name">Event Name</label></td>
+	<td><input type="text" name="event-name"></td>
+      </tr>
+      <tr>
+	<td><label for="date">Event Date</label></td>
+	<td><input type="date" name="date"></td>
+      </tr>
+      <tr>
+	<td><label for="event-type">Event Type</label></td>
+	<td><select name="event-type">
+	        <option value="Choose One">Choose One
+	        {% for type in info["event-type"] %}
+		<option value="{{type}}">{{type}}
+		{% endfor %}
+	    </select></td>
+      </tr>
+      <tr>
+	<td><label for="org-name">Organization Name</label></td>
+	<td><input type="text" name="org-name"></td>
+      </tr>
+      <tr>
+	<td><label for="org-type">Organization Type</label></td>
+	<td><select name="org-type">
+	        <option value="Choose One">Choose One
+	        {% for type in info["org-type"] %}
+		<option value="{{type}}">{{type}}
+		{% endfor %}
+	    </select></td>
+      </tr>
+      </table>
+  </fieldset>
+  <input type="submit" name="submit" value="Search">
+</form>
+
+{% for event in info["events"] %}
+ <div class="event">
+	  <p class="event-name">
+		<a class="event_link" href='/event_info/{{event['event_id']}}'>{{event['name']}}</a></p>
+	  <p class="event-logistics">{{event['date']}} | {{event['start']}} | {{event['loc']}}<br>
+	    <p>
+	    {% for host in event['org_hosts'] %}
+	        {{host}}
+	    {% endfor %}
+	    </p>
+	 </div>
+	{% endfor %}
+
+{% endblock %}

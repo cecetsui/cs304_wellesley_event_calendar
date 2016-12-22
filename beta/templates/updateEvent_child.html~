@@ -9,7 +9,7 @@
 <form method="POST" enctype="multipart/form-data" action={{meth}}>
   <table>
     <tr>
-	<td><label for="org-id">Organization </label></td>
+	<td><label for="org-id"><b>Organization </b></label></td>
 	<td><select name="org-id">
 		{% for event in events["org-id"] %}
 		<option value="{{event[0]}}">{{event[1]}}
@@ -17,35 +17,43 @@
 	</select></td>
     </tr>
     <tr>
-	<td><label for="event-name">Name </label></td>
-        <td><input type="text" name="event-name" value="{{events['event-name']}}" maxlength='50'></td>
+	<td><label for="event-name"><b>Name </b></label></td>
+        <td><input type="text" name="event-name" value="{{events['event-name']}}" maxlength="50" style="width: 300px;"></td>
     </tr>
     <tr>
-	<td><label for="event-date">Date</label></td>
+	<td><label for="event-date"><b>Date </b></label></td>
         <td><input type="date" name="event-date" value="{{events['event-date']}}"></td>
     </tr>
     <tr>
-        <td><label for="event-startTime">Start Time </label></td>
-        <td><input type="time" name="event-startTime" value="{{events['event-startTime']}}"></td>
+        <td><label for="event-startTime"><b>Start Time </b></label></td>
+        <td><input type="time" name="event-startTime" value="{{events['unconverted-start']}}"></td>
     </tr>
     <tr>
-	<td><label for="event-endTime">End Time </label></td>
-        <td><input type="time" name="event-endTime" value="{{events['event-endTime']}}"></td>
+	<td><label for="event-endTime"><b>End Time </b></label></td>
+        <td><input type="time" name="event-endTime" value="{{events['unconverted-end']}}"></td>
     </tr>
     <tr>
-	<td><label for="event-location">Location</label></td>
+	<td><label for="event-location"><b>Location </b></label></td>
         <td><input type="text" name="event-location" value="{{events['event-location']}}" maxlength='25'></td>
     </tr>
     <tr>
-        <td><label for="event-description">Description </label></td>
-        <td><input type="text" name="event-description" value="{{events['event-description']}}" maxlength='500' style='width:300px; height:150px;'></td>
+          <td><label for="event-description"><b>* Description </b></label></td>
+          <td><textarea rows="6" cols="50" name="event-description" maxlength="500" style="width: 300px;">{{events["event-description"]}}</textarea></td>
+        </tr>
+    <tr>
+        <td><label for="file"><b>Spam </b></label></td>
+	<td>
+	  {% if events['event-spam'] != "No spam" %}
+	  <img name='event-spam' src="{{events['event-spam']}}" width="40%">
+	  {% endif %}
+	</td>
     </tr>
     <tr>
-        <td><label for="file">Link to Picture/Spam</label></td>
-        <td><input type="file" name="file" value="{{events['event-spam']}}"></td>
+	<td><label for="file"></label></td>
+	<td><input type="file" name="file" value="{{events['event-spam']}}"></td>
     </tr>
     <tr>
-        <td><label for="event-type">Type</label></td>
+        <td><label for="event-type"><b>Type </b></label></td>
         <td><select name="event-type">
                 {% for type in events["event-type"] %}
 		<option value="{{type}}">{{type}}

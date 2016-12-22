@@ -3,42 +3,41 @@
 {% block header %}Event Information{% endblock %}
 {% block form %}
 
-<p><b>Here are the details for this upcoming event, which will be displayed on the home page master calendar. Click on the Update button to make any changes.</b></p>
+<p><b>Here are the details for {{events['event-name']}}.</b></p>
 
 
   <table>
     <tr>
-	<td><label for="org-id"><b>Organization </b></label></td>
-	<td>
-		{{events["org-id"][0][1]}}
-	</td>
+	<td style="width:15%"><b>Organization </b></td>
+	<td><a href="/org_info/{{events["current-orgid"]}}">{{events["org-id"][0][1]}}</a></td>
     </tr>
     <tr>
-	<td><label for="event-name"><b>Name </b></label></td>
+	<td style="width: 15%"><b>Name </b></td>
+
         <td>{{events['event-name']}}</td>
     </tr>
     <tr>
-	<td><label for="event-date"><b>Date </b></label></td>
+	<td style="width: 15%"><b>Date </b></td>
         <td>{{events['event-date']}}</td>
     </tr>
     <tr>
-        <td><label for="event-startTime"><b>Start Time </b></label></td>
+        <td style="width: 15%"><b>Start Time </b></td>
         <td>{{events['event-startTime']}}</td>
     </tr>
     <tr>
-	<td><label for="event-endTime"><b>End Time </b></label></td>
+        <td style="width: 15%"><b>End Time </b></td>
         <td>{{events['event-endTime']}}</td>
     </tr>
     <tr>
-	<td><label for="event-location"><b>Location </b></label></td>
+	<td style="width: 15%"><b>Location </b></td>
         <td>{{events['event-location']}}</td>
     </tr>
     <tr>
-        <td><label for="event-description"><b>Description </b></label></td>
+        <td style="width: 15%"><b>Description </b></td>
         <td>{{events['event-description']}}</td>
     </tr>
     <tr>
-        <td><label for="event-spam"><b>Spam </b></label></td>
+        <td style="width: 15%"><b>Spam </b></td>
     	
 	{% if events['event-spam'] != "No spam" %}
         <td><img name="event-spam" src="{{events['event-spam']}}" width="40%"></td>
@@ -49,24 +48,47 @@
 	{% endif %}
    </tr>
     <tr>
-        <td><label for="event-type"><b>Type </b></label></td>
+        <td style="width: 15%"><b>Type </b></td>
         <td>
            {{events["event-type"][0]}}
         </td>
     </tr>
   </table>
 
-<form method="POST" action={{meth}}>
-	<input type="submit" name="submit" value="Update">
-</form>
+<br>
+<p>Click <a href="/update_event/{{events["event-id"]}}">here</a> to update this event.</p>
 
-<br><br><br>
-<p>Any questions? Email the organization or its head contact below: </p>
+
+<br>
+<p>Any questions? Here's is who you can email: </p>
 <ul>
 {% for email in emails %}
+    {% if email[1] != "" %}
 	<li><p>{{email[0]}}: 
 	<a href="mailto:{{email[1]}}?Subject={{events['event-name']}}" target="_top">Send Mail</a></li>
+    {% endif %}
 {% endfor %}
 </ul>
+
+<script type="text/javascript">(function () {
+            if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;
+            if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;
+                var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
+                s.type = 'text/javascript';s.charset = 'UTF-8';s.async = true;
+                s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
+                var h = d[g]('body')[0];h.appendChild(s); }})();
+    </script>
+
+<!-- 3. Place event data -->
+    <span class="addtocalendar atc-style-blue">
+        <var class="atc_event">
+            <var class="atc_date_start">{{events['event-date']}} {{events['unconverted-start']}}</var>
+            <var class="atc_date_end">{{events['event-done']}} {{events['unconverted-end']}}</var>
+            <var class="atc_timezone">America/New_York</var>
+            <var class="atc_title">{{events['event-name']}}</var>
+            <var class="atc_description">{{events['event-description']}}</var>
+            <var class="atc_location">{{events['event-location']}}</var>
+        </var>
+    </span>
 {% endblock %}
 

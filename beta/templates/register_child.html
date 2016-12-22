@@ -5,25 +5,25 @@
 <p> Please provide the following details of your organization.<br>
 <p> * Required fields </p>
 
-<form method="POST" action="/register/">
+<form method="POST" enctype="multidata/form-data" action="/register/">
   <fieldset><legend><b>Organization Information</b></legend>
         <table>
 	  <tr>
             <td><label for="org-name"><b>* Name </b></label></td>
-	    <td><input type="text" name="org-name" maxlength='50'></td>
+	    <td><input type="text" name="org-name" maxlength="50" style="width: 300px"></td>
 	  </tr>
 
 	  <tr>
 	    <td><label for="org-description"><b>Description </b></label></td>
-            <td><input type="text" name="org-description" maxlength='500' style='width: 300px; height:150px'></td>
+            <td><textarea rows="6" cols="50" name="org-description"></textarea></td>
 	  </tr>
 	  <tr>
 	    <td><label for="org-email"><b>Email </b></label></td>
-            <td><input type="email" name="org-email" maxlength='25'></td>
+            <td><input type="email" name="org-email" maxlength="25" style="width: 300px"></td>
 	  </tr>
 	  <tr>
 	    <td><label for="org-website"><b>Website URL </b></label></td>
-            <td><input type="text" name="org-website" maxlength='200'></td>
+            <td><input type="text" name="org-website" maxlength="200" style="width: 300px"></td>
 	  </tr>
 	  <tr>
 	    <td><label for="org-type"><b>Type </b></label></td>
@@ -48,15 +48,15 @@
     <table>
       <tr>
 	<td><label for="org-contact"><b>* Head Contact </b></label></td>
-        <td><input type="text" name="org-contact" maxlength='50'></td>
+        <td><input type="text" name="org-contact" maxlength="50" style="width: 300px"></td>
       </tr>
       <tr>
 	<td><label for="org-cont-bnum"><b>* Head Contact BNumber </b></label></td>
-        <td><input type="text" name="org-cont-bnum" maxlength='10'></td>
+        <td><input type="text" name="org-cont-bnum" maxlength="10" style="width: 300px"></td>
       </tr>
       <tr>
 	<td><label for="org-cont-email"><b>* Head Contact Email </b></label></td>
-	<td><input type="test" name="org-cont-email" maxlength='25'></td>
+	<td><input type="test" name="org-cont-email" maxlength="25" style="width: 300px"></td>
       </tr>
       <tr>
 	<td><label for="org-cont-type"><b>Head Contact is a </b></label></td>

@@ -18,7 +18,7 @@
     </tr>
     <tr>
 	<td><label for="event-name"><b>Name </b></label></td>
-        <td><input type="text" name="event-name" value="{{events['event-name']}}" maxlength='50'></td>
+        <td><input type="text" name="event-name" value="{{events['event-name']}}" maxlength="50" style="width: 300px;"></td>
     </tr>
     <tr>
 	<td><label for="event-date"><b>Date </b></label></td>
@@ -26,11 +26,11 @@
     </tr>
     <tr>
         <td><label for="event-startTime"><b>Start Time </b></label></td>
-        <td><input type="time" name="event-startTime" value="{{events['event-startTime']}}"></td>
+        <td><input type="time" name="event-startTime" value="{{events['unconverted-start']}}"></td>
     </tr>
     <tr>
 	<td><label for="event-endTime"><b>End Time </b></label></td>
-        <td><input type="time" name="event-endTime" value="{{events['event-endTime']}}"></td>
+        <td><input type="time" name="event-endTime" value="{{events['unconverted-end']}}"></td>
     </tr>
     <tr>
 	<td><label for="event-location"><b>Location </b></label></td>
@@ -38,11 +38,21 @@
     </tr>
     <tr>
           <td><label for="event-description"><b>* Description </b></label></td>
-          <td><textarea rows="6" cols="50" name="event-description" form="usrform"></textarea></td>
+          <td><textarea rows="6" cols="50" name="event-description" maxlength="500" style="width: 300px;">{{events["event-description"]}}</textarea></td>
         </tr>
     <tr>
         <td><label for="file"><b>Spam </b></label></td>
-        <td><input type="file" name="file" value="{{events['event-spam']}}"></td>
+	<td>
+	  {% if events['event-spam'] != "No spam" %}
+	  <img name='event-spam' src="{{events['event-spam']}}" width="40%">
+	  {% else %}
+	  <p>No spam</p>
+	  {% endif %}
+	</td>
+    </tr>
+    <tr>
+	<td><label for="file"></label></td>
+	<td><input type="file" name="file" value="{{events['event-spam']}}"></td>
     </tr>
     <tr>
         <td><label for="event-type"><b>Type </b></label></td>
